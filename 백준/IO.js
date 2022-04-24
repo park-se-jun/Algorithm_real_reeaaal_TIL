@@ -1,4 +1,3 @@
-const { on } = require("events");
 const fs = require("fs");
 const readline = require("readline");
 // fs 이용 모듈

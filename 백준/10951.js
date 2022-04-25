@@ -4,7 +4,7 @@
 const fs = require("fs");
 const input = fs.readFileSync("./input.txt").toString().trim();
 function solution(input) {
-  const [T, ...inputs] = input.split("\n");
+  const inputs = input.split("\n");
 
   // inputs.forEach((element) => {
   //   const [first, second] = element.split(" ");
@@ -13,8 +13,8 @@ function solution(input) {
   // });
 
   for (element of inputs) {
-    const [first, second] = element.split(" ");
-    const answer = parseInt(first, 10) + parseInt(second, 10);
+    const [first, second] = element.split(" ").map((x) => Number(x));
+    const answer = first + second;
     console.log(answer);
   }
 

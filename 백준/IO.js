@@ -2,7 +2,7 @@ const fs = require("fs");
 const readline = require("readline");
 // fs 이용 모듈
 function FsIO(inputPath, solutionCallback) {
-  const input = fs.readFileSync(inputPath).toString().trim();
+  const input = fs.readFileSync(inputPath).toString();
   solutionCallback(input);
 }
 

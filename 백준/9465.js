@@ -2,30 +2,50 @@ let cache = [];
 /**
  *          0번째가 시작, 1번째가 시작, max
  * n의 크기
+ * n,i 를 반드시 포함하는 스티커를 띄는 방법 중 최대
  */
-let max = [];
-function dp(n, startYIndex, board) {
-  if (n === 1) {
-    cache[1][0] = board[0][0];
-    cache[1][1] = board[1][0];
-    max[n] = Math.max(cache[n][0], cache[n][1]);
-    return cache[1][2];
+function dp(N, i, array) {
+  //i === 1||0
+  if (N <= 0) {
+    return 0;
   }
-  if (n === 2) {
-    cache[2][0] = board[0][0] + board[1][1];
-    cache[2][1] = board[1][0] + board[0][1];
-    max[n] = Math.max(cache[n][0], cache[n][1]);
-    return cache[2][2];
+  if (N === 1) {
+    cache[i][N] = array[i][N];
+    return cache[i][N];
   }
-  if (cache[n][2] != undefined) {
-    return cache[n][2];
+  if (cache[i][N] != undefined) {
+    return cache[i][N];
   }
-  chache[n][startYIndex] = Math.max(max[n - 2]);
-  return cache[n][startYIndex];
+  if (i === 0) {
+    cache[i][N] =
+      Math.max(dp(N - 1, 1, array), dp(N - 2, 1, array)) + array[i][N];
+  } else if (i === 1) {
+    cache[i][N] =
+      Math.max(dp(N - 1, 0, array), dp(N - 2, 0, array)) + array[i][N];
+  }
+  return cache[i][N];
 }
 function solution(input) {
-  let [T, N, board] = input.split("\n");
+  let [T, ...remain] = input.split("\n");
   T = Number(T);
-  N = Number(N);
-  for (let i = 0; i < T; i++) {}
+  let result = [];
+  for (let i = 0; i < T; i++) {
+    let targetBoard = [];
+    let [n, boardFirst, boardSecond, ...next] = remain;
+    remain = next;
+    n = Number(n);
+    targetBoard.push(boardFirst.split(" ").map((x) => Number(x)));
+    targetBoard.push(boardSecond.split(" ").map((x) => Number(x)));
+    cache = Array.from({ length: 2 }, () => new Array(n + 1));
+    targetBoard[0].unshift(undefined);
+    targetBoard[1].unshift(undefined);
+    const maxScore = Math.max(dp(n, 0, targetBoard), dp(n, 1, targetBoard));
+    result.push(maxScore);
+  }
+  for (element of result) {
+    console.log(element);
+  }
 }
+
+const input = require("fs").readFileSync("./input.txt").toString().trim();
+solution(input);

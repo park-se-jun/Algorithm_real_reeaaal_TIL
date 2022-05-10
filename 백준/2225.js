@@ -39,3 +39,26 @@
  * }
  * N 과 K 는 매우 작은 편 (200 이하)
  */
+function dp(n, k) {
+  if (k === 1) {
+    cache[n][1] = 1;
+    return 1;
+  }
+  if (cache[n][k] != undefined) {
+    return cache[n][k];
+  }
+  cache[n][k] = 0;
+  for (let i = 0; i < n + 1; i += 1) {
+    cache[n][k] += dp(n - i, k - 1) % 1000000000;
+  }
+  cache[n][k] = cache[n][k] % 1000000000;
+  return cache[n][k];
+}
+cache = Array.from({ length: 201 }, () => {
+  return new Array(201);
+});
+const input = require("fs").readFileSync("/dev/stdin").toString();
+// const input = require("fs").readFileSync("./input.txt").toString();
+
+let [N, K] = input.split(" ").map((x) => Number(x));
+console.log(dp(N, K));

@@ -13,9 +13,11 @@ let imposible = false;
 let nextDayQ = [];
 function bfsOneDay(h, w) {
   let q = [...nextDayQ]; //오늘 살필 토마토
+  let idx = 0;
   nextDayQ = []; //내일 익을 토마토을 비워주기
-  while (q.length != 0) {
-    let [hereY, hereX] = q.shift();
+  while (q.length !== idx) {
+    let [hereY, hereX] = q[idx];
+    idx += 1;
     for (let i = 0; i < 4; i += 1) {
       let thereY = hereY + dy[i];
       let thereX = hereX + dx[i];

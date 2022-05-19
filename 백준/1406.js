@@ -1,68 +1,44 @@
-class Node {
-    constructor(value){
-        this.value = value;
-        this.next = null;
+class LinkedListNode{
+    constructor(data){
         this.prev = null;
+        this.next = null;
     }
-    addNext(value){
-        let node = new Node(value);
-        if(this.next!=null){
-            let nextnext = this.next;
-            this.next = node;
-            this.next.prev = this;
-            this.next.next =nextnext;
-            this.next.next.prev = this.next;
-        }else{
-            this.next = node;
-            this.next.prev = this;
-        }
+}
+class DoubleLinkedList{
+    constructor(){
+        this.head = null;
+        this.tail = null;
+        this.cursur = null;
+        this.size = 0;
+    }
+    isEmpty(){
+        return this.size === 0;
+    }
+    moveCursurFront(){
+        this.cursur = this.cursur.prev;
+    }
+    moveCursurBack(){
+        this.cursur = this.cursur.next;
+    }
+    addCursurFront(value){
 
-        return this.next;
     }
-    addPrev(value){
-        let node = new Node(value);
-        if(this.prev!=null){
-            let prevprev = this.prev;
-            this.prev = node;
-            this.prev.next = this;
-            this.prev.prev = prevprev;
-            this.prev.prev.next = this.prev;
-        }else{
-            this.prev = node;
-            this.prev.next = this;
-        }
+    addCursurBack(value){
 
-        return this.prev;
     }
-    getPrev(){//L
-        if(this.prev === null) return this;
-        return this.prev;
-    }
-    getNext(){//D
-        if(this.next === null) return this;
-        return this.next;
-    }
-    deletePrev(){//B
-        let prevprev = this.prev.getPrev();
-        this.prev= prevprev;
-        this.prev.next = this;
-        return this;
-    }
-    P(value){//P
-        this.addPrev(value);
-        return this;
-    }
-    printAll(){
-        let cursur = this;
-        let result = "";
-        while(cursur.getPrev()===cursur){
-            cursur=cursur.getPrev();
+    deleteCursur(){
+        let tmpNode =this.cursur;
+        try{
+            tmpNode.prev.next = tmpNode.next;
+            tmpNode.next.prev = tmpNode.prev;    
+        } catch(e){
+            if(tmpNode.prev===null){//가장 앞이면
+
+            }else if(tmpNode.next === null){// 가장 뒤면
+                
+
+            }
         }
-        while(cursur.getNext()===cursur){
-            result += cursur.value;
-            cursur = cursur.getNext();
-        }
-        return result;
     }
 }
 function solution(input){

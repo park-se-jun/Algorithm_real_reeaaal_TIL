@@ -1,3 +1,5 @@
+//체스판처럼 칠하면 짝수열
+
 const path = process.platform ==="linux"?"/dev/stdin" : "./input.txt";
 const input = require("fs").readFileSync(path).toString().trim();
 
